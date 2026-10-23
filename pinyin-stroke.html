@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一笔一划写拼音 · 描红动画</title>
+  <style>
+    :root { --paper:#f4f0e6; --ink:#3a342a; --line:#cdbfa0; --accent:#c0392b; }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; background:var(--paper); color:var(--ink);
+      font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+      display:flex; flex-direction:column; align-items:center;
+      padding:32px 16px 60px;
+    }
+    h1 { font-size:22px; margin:0 0 4px; font-weight:700; }
+    .sub { color:#8a7f68; font-size:13px; margin-bottom:24px; }
+    .card {
+      width:100%; max-width:680px; background:#fbf8f0;
+      border:1px solid #e2d9c4; border-radius:16px;
+      box-shadow:0 6px 20px rgba(120,100,60,.12);
+      padding:22px;
+    }
+    .stage {
+      background:#fffdf7; border:1px solid #ece4d2; border-radius:12px;
+      padding:18px 14px; margin-bottom:18px;
+    }
+    pinyin-stroke { display:block; }
+    .controls { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    input[type=text] {
+      flex:1 1 200px; min-width:160px; font-size:18px; padding:10px 12px;
+      border:1px solid #d8cdb4; border-radius:10px; background:#fff;
+      color:var(--ink); outline:none;
+    }
+    input[type=text]:focus { border-color:var(--accent); }
+    button {
+      font-size:14px; padding:10px 16px; border:none; border-radius:10px;
+      background:var(--accent); color:#fff; cursor:pointer; font-weight:600;
+    }
+    button.ghost { background:#efe7d4; color:var(--ink); }
+    button:active { transform:translateY(1px); }
+    .row { display:flex; align-items:center; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    label { font-size:13px; color:#7a6f58; display:flex; align-items:center; gap:6px; }
+    input[type=range] { width:140px; }
+    .val { font-variant-numeric:tabular-nums; color:var(--ink); min-width:46px; }
+    .hint { font-size:12px; color:#a99c80; margin-top:14px; line-height:1.7; }
+    code { background:#efe7d4; padding:1px 6px; border-radius:5px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <h1>一笔一划写拼音</h1>
+  <div class="sub">ToneOZ 快雪拼音体（英数版）· 四线三格 · 书写动画</div>
+
+  <div class="card">
+    <div class="stage">
+      <pinyin-stroke id="ps" text="aoe" speed="700" gap="160" loop></pinyin-stroke>
+    </div>
+
+    <div class="controls">
+      <input id="inp" type="text" value="aoe" placeholder="输入拼音，如 aoe / bpm / mā / hǎo / lǜ" />
+      <button id="play">▶ 播放</button>
+      <button id="reset" class="ghost">↺ 重置</button>
+    </div>
+
+    <div class="row">
+      <label>每字时长 <input id="speed" type="range" min="120" max="1600" step="20" value="700"><span class="val" id="speedv">700ms</span></label>
+      <label>间隔 <input id="gap" type="range" min="0" max="600" step="20" value="160"><span class="val" id="gapv">160ms</span></label>
+      <label><input id="loop" type="checkbox" checked> 循环</label>
+      <label><input id="grid" type="checkbox" checked> 四线三格</label>
+      <label><input id="brush" type="checkbox"> 笔锋</label>
+    </div>
+
+    <div class="hint">
+      字体为 ToneOZ 快雪拼音体英数版（单层 ɑ、圆体，声调字符全含 <code>ā á ǎ à ǖ ǘ ǚ ǜ</code>）。<br>
+      笔顺按小学教材编排（<code>tools/gen.mjs</code>）：a=左半圆+竖右弯，b=竖+右半圆，e=横+左半圆（一笔写成），
+      f/t=弯竖+横，k=竖+左斜右斜，z=一笔横折横，w=两笔，ü=竖右弯+竖+两点；声调在**整个音节写完后**才标
+      （<code>hǎo</code> 先 h、a、o，再写 ˇ）。运行时笔尖沿笔画推进，蒙版随之露出字形。<br>
+      勾选「笔锋」（<code>pen="brush"</code>）后笔迹改为带宽度变化的带子（起笔渐粗、收笔提细），
+      与 <code>compare.html</code> 里的三种笔尖模式可并排对比。<br>
+      任意框架可用：<code>&lt;script src="pinyin-stroke.js"&gt;&lt;/script&gt;</code> 后写
+      <code>&lt;pinyin-stroke text="mā"&gt;&lt;/pinyin-stroke&gt;</code>，或用 <code>el.play()</code> / <code>el.replay()</code> 调 API。
+    </div>
+  </div>
+
+  <script src="pinyin-stroke.js?v=10"></script>
+  <script>
+    const ps = document.getElementById('ps');
+    const inp = document.getElementById('inp');
+    const playBtn = document.getElementById('play');
+    const resetBtn = document.getElementById('reset');
+    const speed = document.getElementById('speed');
+    const gap = document.getElementById('gap');
+    const loop = document.getElementById('loop');
+    const grid = document.getElementById('grid');
+    const brush = document.getElementById('brush');
+    const speedv = document.getElementById('speedv');
+    const gapv = document.getElementById('gapv');
+
+    function apply() {
+      ps.setAttribute('text', inp.value);
+      ps.setAttribute('speed', speed.value);
+      ps.setAttribute('gap', gap.value);
+      if (loop.checked) ps.setAttribute('loop', ''); else ps.removeAttribute('loop');
+      if (grid.checked) ps.setAttribute('grid', ''); else ps.setAttribute('grid', 'false');
+      if (brush.checked) ps.setAttribute('pen', 'brush'); else ps.removeAttribute('pen');
+    }
+
+    inp.addEventListener('input', apply);
+    speed.addEventListener('input', () => { speedv.textContent = speed.value + 'ms'; apply(); });
+    gap.addEventListener('input', () => { gapv.textContent = gap.value + 'ms'; apply(); });
+    loop.addEventListener('change', apply);
+    grid.addEventListener('change', apply);
+    brush.addEventListener('change', apply);
+
+    playBtn.addEventListener('click', () => ps.replay());
+    resetBtn.addEventListener('click', () => ps.reset());
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>拼音字体对比</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika&family=Quicksand:wght@400;500&family=Klee+One&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'PSToneOZ';
+    src: url('./ToneOZ-Quicksnow-W500.ttf') format('truetype');
+    font-display: swap;
+  }
+  :root { --paper:#f4f0e6; --ink:#3a342a; --line:#e2d9c4; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:28px 24px 60px; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  h1 { font-size:20px; margin:0 0 6px; }
+  .sub { font-size:13px; color:#8a7f68; margin-bottom:22px; line-height:1.7; }
+  .row {
+    max-width:1060px; margin:0 auto 14px; background:#fbf8f0; border:1px solid var(--line);
+    border-radius:14px; padding:16px 18px 18px; box-shadow:0 4px 14px rgba(120,100,60,.07);
+  }
+  .head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .name { font-size:15px; font-weight:700; }
+  .tag {
+    font-size:11px; color:#8a7f68; background:#efe7d4; border-radius:999px; padding:2px 8px;
+  }
+  .tag.ok { background:#e6f0e2; color:#3f6b3a; }
+  .tag.warn { background:#f6e6e2; color:#a4422f; }
+  .line { font-size:64px; line-height:1.35; letter-spacing:2px; white-space:nowrap; overflow-x:auto; }
+  .line.small { font-size:44px; }
+  .grid {
+    position:relative; padding:6px 0;
+    background-image:
+      linear-gradient(#e0d6c0 1px, transparent 1px),
+      linear-gradient(#ece4d2 1px, transparent 1px),
+      linear-gradient(#e0d6c0 1px, transparent 1px);
+    background-size:100% 33.33%;
+    background-position:0 4%, 0 50%, 0 96%;
+  }
+  .note { font-size:12px; color:#9a8f78; margin-top:6px; }
+  .tone { color:#c0392b; }
+</style>
+</head>
+<body>
+  <h1>拼音字体对比</h1>
+  <div class="sub">
+    同一段内容，不同字体。四线格是示意（浅色横线），重点看：a/g 是否单层、l 有没有弯尾、t 是直还是弯底、声调符号的粗细与位置。<br>
+    标 <span class="tag ok">声调齐全</span> 的字体能直接打出 ā á ǎ à ǖ ǘ ǚ ǜ；标 <span class="tag warn">可能缺字</span> 的要看实际渲染。
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">ToneOZ 快雪拼音体 Medium / W500（项目在用）</span><span class="tag">免费商用 · 教学圆体 · W500</span></div>
+    <div class="line" data-font="'PSToneOZ'" style="font-family:'PSToneOZ'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'PSToneOZ'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'PSToneOZ'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">单层 ɑ、l 一竖无尾、u 带尾；声调位置按教材排，ǖǘǚǜ 齐全。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">Andika（上一版）</span><span class="tag">SIL OFL · 识字字体</span><span class="tag ok">声调齐全</span></div>
+    <div class="line" data-font="'Andika'" style="font-family:'Andika'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Andika'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Andika'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">单层 a/g、l 带小弯、t 弯底；字形为识字设计，笔画较均匀。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">Quicksand（快雪拼音体的拉丁底）</span><span class="tag">OFL · 圆体</span><span class="tag ok">声调齐全</span></div>
+    <div class="line" data-font="'Quicksand'" style="font-family:'Quicksand'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Quicksand'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Quicksand'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">快雪（ToneOZ Quicksnow）在 Quicksand 上把 ɑ 改成单层、u 加尾、声调符号增强；这里展示的是它的底字。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">Klee One</span><span class="tag">OFL · 日本教科书体</span><span class="tag">声调待实测</span></div>
+    <div class="line" data-font="'Klee One'" style="font-family:'Klee One'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Klee One'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Klee One'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">教科书手写感最强，但声调字符覆盖要看实际渲染（缺字会掉到后备字体）。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">楷体 Kaiti SC</span><span class="tag">macOS 系统</span><span class="tag warn">拉丁不一定合教材</span></div>
+    <div class="line" data-font="'Kaiti SC','STKaiti'" style="font-family:'Kaiti SC','STKaiti'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Kaiti SC','STKaiti'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Kaiti SC','STKaiti'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">汉字楷体很正，但拉丁字母是它顺带做的，笔形和拼音教材不一致。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">Comic Sans MS</span><span class="tag">系统</span><span class="tag warn">声调位置一般</span></div>
+    <div class="line" data-font="'Comic Sans MS'" style="font-family:'Comic Sans MS'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Comic Sans MS'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Comic Sans MS'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">单层 a/g，观感接近，但 t 是直底、l 无尾，和教材有差别。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">Bradley Hand</span><span class="tag">macOS 系统 · 手写</span><span class="tag warn">声调可能缺</span></div>
+    <div class="line" data-font="'Bradley Hand'" style="font-family:'Bradley Hand'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Bradley Hand'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Bradley Hand'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">真手写感，但倾斜、连笔，不适合教书写规范。</div>
+  </div>
+
+  <div class="row">
+    <div class="head"><span class="name">Chalkboard SE</span><span class="tag">macOS 系统 · 教学圆体</span><span class="tag warn">声调可能缺</span></div>
+    <div class="line" data-font="'Chalkboard SE'" style="font-family:'Chalkboard SE'">a b d g l t f k q p m n u ü w x y z</div>
+    <div class="line small" style="font-family:'Chalkboard SE'">ā á ǎ à　ō é ě ì　ū ǔ　ǖ ǘ ǚ ǜ</div>
+    <div class="line small" style="font-family:'Chalkboard SE'">mā hǎo　shān hǎi jǐng　lǜ</div>
+    <div class="note">国外小学常用，字母形态偏英文手写。</div>
+  </div>
+
+  <div class="sub" style="max-width:1060px;margin:24px auto 0">
+    说明：快雪拼音体（ToneOZ Quicksnow）本身是免费商用的教学圆体，拉丁部分基于 Quicksand 改造（ɑ 单层、u 加尾、声调符号增强），
+    这里没直接内置它的字体文件，先看它的底字形态；需要的话我把它的 ttf 拉下来替换进来再比一次。
+  </div>
+<script>
+  // 逐字符检测声调覆盖：等字体加载完再测，缺哪个字就写出来
+  const tones = 'āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜ';
+  function check() {
+    document.querySelectorAll('.line[data-font]').forEach((line) => {
+      const f = line.dataset.font;
+      const row = line.closest('.row');
+      const head = row.querySelector('.head');
+      const missing = [...tones].filter(ch => !document.fonts.check('64px ' + f, ch)).join('');
+      let tag = head.querySelector('.toneflag');
+      if (!tag) { tag = document.createElement('span'); head.appendChild(tag); }
+      if (missing) {
+        tag.className = 'tag warn toneflag';
+        tag.textContent = '声调缺字：' + missing;
+      } else {
+        tag.className = 'tag ok toneflag';
+        tag.textContent = '声调齐全';
+      }
+    });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(check); else check();
+  setTimeout(check, 2500);
+</script>
+</body>
+</html>

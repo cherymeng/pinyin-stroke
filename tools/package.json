@@ -1,0 +1,15 @@
+{
+  "name": "pinyin-stroke-tools",
+  "version": "1.0.0",
+  "description": "生成 pinyin-stroke 的笔画数据并构建自包含组件",
+  "scripts": {
+    "gen": "node gen.mjs",
+    "build": "node build.mjs",
+    "all": "node gen.mjs && node build.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "opentype.js": "^1.3.4"
+  },
+  "private": true
+}
